@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="34px" height="20px" viewBox="0 0 34 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 51.3 (57544) - http://www.bohemiancoding.com/sketch -->
+    <title>Group</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Mainnavigation_B2C" transform="translate(-1546.000000, -29.000000)" fill-rule="nonzero">
+            <g id="Group" transform="translate(1546.000000, 29.000000)">
+                <rect id="Rectangle-2" stroke="#FFFFFF" fill="#000000" x="0.5" y="0.5" width="33" height="19"></rect>
+                <rect id="Rectangle" fill="#D0021B" x="1" y="7" width="32" height="6"></rect>
+                <rect id="Rectangle-Copy" fill="#F8E71C" x="1" y="13" width="32" height="6"></rect>
+            </g>
+        </g>
+    </g>
+</svg>

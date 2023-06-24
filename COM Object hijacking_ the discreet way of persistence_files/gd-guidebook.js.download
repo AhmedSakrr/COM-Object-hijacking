@@ -1,0 +1,69 @@
+var GdScrollIndicator = GdScrollIndicator || {};
+
+GdScrollIndicator.init = function(contentContainer, footerContainer, progressBar) {
+	this.didScroll = false;
+	this.contentContainer = (contentContainer ? $(contentContainer) : $('#pagenews-content-container'));
+	this.footerContainer = footerContainer ? $(footerContainer) : $('#site-footer');
+	this.progressBar = progressBar ? $(progressBar) : $('.pagenews-progress progress');
+
+	this.update();
+
+	this.initEventListeners();
+
+	setInterval(function() {
+		if ( GdScrollIndicator.didScroll ) {
+			GdScrollIndicator.didScroll = false;
+			GdScrollIndicator.progressBar.attr('value', $(window).scrollTop() - GdScrollIndicator.contentStart);
+		}
+	}, 150);
+
+};
+
+GdScrollIndicator.update = function() {
+	this.contentStart = this.contentContainer.offset().top;
+	this.contentHeight = this.contentContainer.height();
+	this.footerHeight = this.footerContainer.height();
+	this.winHeight = $(window).height();
+	this.progressBar.attr('max', this.contentHeight  - this.winHeight + this.footerHeight);
+};
+
+GdScrollIndicator.initEventListeners = function() {
+	$(window).scroll(function() {
+		GdScrollIndicator.didScroll = true;
+	});
+	$(window).on('resize', function() {
+		GdScrollIndicator.update();
+	});
+};
+
+GdScrollIndicator.calculateReadingTime = function(elements, options) {
+	var defaults = {
+		readingTimeTarget: '.eta',
+		wordCountTarget: null,
+		wordsPerMinute: 270,
+		lessThanAMinuteString: '',
+		prependTimeString: '',
+		prependWordString: '',
+		apendWordString: ' ',
+		minShortForm: 'min'
+	};
+	var settings = $.extend({}, defaults, options);
+	var text = '';
+	elements.forEach(function(element) {
+		text += ' ' + element.text();
+	});
+	if(text !== '') {
+		var totalWords = text.trim().split(/\s+/g).length;
+		var wordsPerSecond = settings.wordsPerMinute / 60;
+		var totalReadingTimeSeconds = totalWords / wordsPerSecond;
+		var readingTimeMinutes = Math.round(totalReadingTimeSeconds / 60);
+		if(readingTimeMinutes > 0) {
+			$(settings.readingTimeTarget).text(settings.prependTimeString + readingTimeMinutes + ' ' + settings.minShortForm);
+		} else {
+			$(settings.readingTimeTarget).text(settings.prependTimeString + settings.lessThanAMinuteString);
+		}
+		if(settings.wordCountTarget !== '' && settings.wordCountTarget !== undefined) {
+			$(settings.wordCountTarget).text(settings.prependWordString + totalWords + settings.apendWordString);
+		}
+	}
+};
